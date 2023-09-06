@@ -1,0 +1,20 @@
+export const Strings = {
+    auth: 'Авторизация',
+    enter: 'Войти',
+    loginPlaceholder: 'Логин или телефон',
+    passwordPlaceholder: 'Пароль',
+    dontRememberPass: 'Не помню пароль',
+    loginByVK: 'Войти через Вконтакте',
+    loginByYandex: 'Войти через Яндекс',
+    registration: 'Регистрация',
+    raffle: 'Розыгрыш',
+    leftToRaffle: 'До начала розыгрыша',
+    raffleToday: 'Разыгрываем сегодня',
+    macbook: 'Macbook',
+    iphone: 'Iphone',
+    airPods: 'AirPods',
+    participate: 'Учавствовать',
+    exit: 'Выход',
+    applyExit: 'Покинуть аккаунт? ',
+    cancel: 'Отмена'
+}

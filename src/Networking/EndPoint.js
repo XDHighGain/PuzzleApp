@@ -1,0 +1,1 @@
+export const urlString = 'http://45.12.74.28/graphql';
