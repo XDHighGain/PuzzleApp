@@ -27,13 +27,16 @@ export const AuthScreenModel = () => {
             uri: urlString,
             credentials: 'same-origin'
         });
-
+        console.log('link', link)
         const client = new ApolloClient({
             cache: new InMemoryCache(),
-            link,
+            uri: urlString,
         });
+        //console.log('client', client)
+        //NavigateToMainScreen();
+
         const query = gql`query  {
-            login(login:"${loginValue}", password:"${passwordValue}") {
+            login(login: "geratest", password: "123123") {
               ... on TokenPair {
                 __typename
                 accessToken
@@ -50,6 +53,7 @@ export const AuthScreenModel = () => {
             { query: query }
         ).then(
             res => {
+                console.log('res', res)
                 let token = getToken(res);
                 if (token)
                     NavigateToMainScreen();

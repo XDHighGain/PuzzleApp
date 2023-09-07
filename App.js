@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native';
+import { Platform, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AuthScreen, NavigationNameAuthScreen } from './src/UI/Screens/AuthScreen';
 import { MainScreen, NavigationNameMainScreen } from './src/UI/Screens/MainScreen';
 import { navigationRef, isReadyRef } from './src/Navigation/RootOptions';
-
+import 'react-native-reanimated';
+import { Colors } from './src/Resources/Colors';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -14,13 +16,18 @@ function App() {
   const StackNavigator = ({ children }) => <Stack.Navigator initialRouteName={startScreen}>{children}</Stack.Navigator>;
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'grey' }}>
+    <SafeAreaProvider style={{ flex: 1, backgroundColor: Colors.White }}>
       <NavigationContainer
-        ref={navigationRef}
+      style={{flex: 1}}
+      ref={navigationRef}
         onReady={() => {
           isReadyRef.current = true;
         }}>
-        <StackNavigator>
+          <SafeAreaView 
+          edges={['top']}
+          style={{flex: 1}}>
+            <StatusBar barStyle={Platform.OS === 'ios' ? 'dark-content' : 'default'}/>
+            <StackNavigator>
           <Stack.Screen
             options={{
               headerShown: false,
@@ -38,8 +45,10 @@ function App() {
             component={MainScreen}>
           </Stack.Screen>
         </StackNavigator>
+          </SafeAreaView>
+        
       </NavigationContainer>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
