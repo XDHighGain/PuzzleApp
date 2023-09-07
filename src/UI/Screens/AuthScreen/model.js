@@ -32,11 +32,8 @@ export const AuthScreenModel = () => {
             cache: new InMemoryCache(),
             uri: urlString,
         });
-        //console.log('client', client)
-        //NavigateToMainScreen();
-
         const query = gql`query  {
-            login(login: "geratest", password: "123123") {
+            login(login: "${loginValue}", password: "${passwordValue}") {
               ... on TokenPair {
                 __typename
                 accessToken
@@ -53,7 +50,6 @@ export const AuthScreenModel = () => {
             { query: query }
         ).then(
             res => {
-                console.log('res', res)
                 let token = getToken(res);
                 if (token)
                     NavigateToMainScreen();
