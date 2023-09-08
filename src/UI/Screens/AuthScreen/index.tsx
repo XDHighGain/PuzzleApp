@@ -16,8 +16,8 @@ export const AuthScreen = () => {
         loginValue,
         passwordValue,
         handleSubmit,
-        setLoginValue,
-        setPasswordValue
+        handleLoginChange,
+        handlePasswordChange,       
     } = AuthScreenModel();
 
     return (
@@ -46,14 +46,14 @@ export const AuthScreen = () => {
                 <View style={Styles.inputsContainer}>
                     <AuthTextInput
                         value={loginValue}
-                        onValueChange={value => setLoginValue(value)}
+                        onValueChange={handleLoginChange}
                         placeholder={Strings.loginPlaceholder} />
                     <View style={Styles.separator} />
                     <AuthTextInput
                         value={passwordValue}
                         secureInput={true}
                         rightContent={true}
-                        onValueChange={value => setPasswordValue(value)}
+                        onValueChange={handlePasswordChange}
                         placeholder={Strings.passwordPlaceholder} />
                 </View>
                 <ButtonPrimary

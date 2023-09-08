@@ -1,20 +1,43 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { urlString } from "../../../Networking/EndPoint";
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import { createHttpLink } from '@apollo/client/core';
 import { NavigateToMainScreen } from "../../../Navigation/Navigation";
 
+interface IModelFields {
+    textInput: string,
+    handler: () => void,
+}
+
+interface ILoginData {
+    __typename: string,
+    accessToken: string | undefined,
+    refreshToken: string
+}
+
+interface ILogin {
+    login: ILoginData
+}
+
+interface ITokenModel {
+    data: ILogin,
+    loading: boolean,
+    networkStatus: number
+}
+
 export const AuthScreenModel = () => {
+    const [loginValue, setLoginValue] = React.useState<IModelFields["textInput"]>('');
+    const [passwordValue, setPasswordValue] = React.useState<IModelFields["textInput"]>('');
 
-    const [loginValue, setLoginValue] = useState('');
-    const [passwordValue, setPasswordValue] = useState('');
+    const handleLoginChange = (newValue: IModelFields["textInput"]) => setLoginValue(newValue)
+    const handlePasswordChange = (newValue: IModelFields["textInput"]) => setPasswordValue(newValue)
 
-    const getToken = (response) => {
+    const getToken = (response: ITokenModel) => {
         try {
-            let token = response.data.login.accessToken;
-            if (token !== '')
+            let token = response?.data?.login?.accessToken;
+            if (token !== undefined && token.length > 0)
                 return token;
-            return null;
+            return undefined;
         }
         catch (e) {
             console.error('Ошибка получения токена');
@@ -27,7 +50,7 @@ export const AuthScreenModel = () => {
             uri: urlString,
             credentials: 'same-origin'
         });
-        console.log('link', link)
+
         const client = new ApolloClient({
             cache: new InMemoryCache(),
             uri: urlString,
@@ -50,9 +73,13 @@ export const AuthScreenModel = () => {
             { query: query }
         ).then(
             res => {
+                console.log(`login: "${loginValue}", password: "${passwordValue}"`, res)
                 let token = getToken(res);
-                if (token)
+                if (token !== undefined) {
+                    console.log('Token recieved - ', token)
                     NavigateToMainScreen();
+                }
+
             }
         ).catch(
             e => console.log('error', e)
@@ -64,6 +91,8 @@ export const AuthScreenModel = () => {
         passwordValue,
         handleSubmit,
         setLoginValue,
-        setPasswordValue
+        setPasswordValue,
+        handleLoginChange,
+        handlePasswordChange,
     })
 }

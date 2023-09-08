@@ -5,13 +5,15 @@ import { NavigationNameAuthScreen } from "../UI/Screens/AuthScreen"
 
 export const NavigateToMainScreen = () => {
     NavigateAndClearStack({
-        name: NavigationNameMainScreen
+        name: NavigationNameMainScreen,
+        params: null
     })
 }
 
 export const NavigateToAuthScreen = () => {
     NavigateAndClearStack({
-        name: NavigationNameAuthScreen
+        name: NavigationNameAuthScreen,
+        params: null
     })
 }
 

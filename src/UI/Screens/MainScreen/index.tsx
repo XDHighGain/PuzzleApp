@@ -23,7 +23,6 @@ export const MainScreen = () => {
                 onPress: () => NavigateToAuthScreen()
             }
         ])
-
     }
 
     return (
